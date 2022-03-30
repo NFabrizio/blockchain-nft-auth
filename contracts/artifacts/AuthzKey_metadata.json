@@ -564,11 +564,11 @@
 			]
 		},
 		"contracts/AuthzKey.sol": {
-			"keccak256": "0x7e05d268af93103b7a44157de4e390d664f4ab552b9253f118d58b4a1aef8ed5",
+			"keccak256": "0xa8fbaa595b98ba2caa1d656e936a69a906d5f1b8a69cb7f3005f574d12cbcfa3",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://45268b41b963739a05e7b8a22fbfc88a3e187aef789f40b401d306dd63aa1e8f",
-				"dweb:/ipfs/QmVe2jPknjqdWLwiefWTiinQTA1vUZkcyCDEgnEfePznvg"
+				"bzz-raw://86195436a2b45d64a9a7ad89c48f9d6ce1111c5a1cf6413342226d88bf1a6e97",
+				"dweb:/ipfs/QmWoPanATb6TDcVLWF3oBKBkFkDAfAkmNZCYQMHcSsLdKL"
 			]
 		}
 	},
