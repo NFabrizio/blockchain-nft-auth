@@ -29,6 +29,8 @@ contract AuthzKey is ERC721URIStorage {
   //       );
   // }
 
+  event SendTokenId(address owner, uint256 tokenId);
+
   function transferAuthzKey(address _newOwner, string memory _authZKey) public returns (uint256) {
     return this.mint(_newOwner, _authZKey);
   }
@@ -52,6 +54,8 @@ contract AuthzKey is ERC721URIStorage {
     _mint(newOwner, newItemId);
     // _setTokenURI(newItemId, tokenURI);
     _setTokenURI(newItemId, authZKey);
+
+    emit SendTokenId(newOwner, newItemId);
 
     return newItemId;
   }
