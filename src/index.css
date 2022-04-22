@@ -12,7 +12,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-.minter {
+.minter,
+.restricted {
   max-width: 80vh;
   max-height: 80vh;
   padding: 60px 100px;
@@ -52,25 +53,18 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+/* button:hover {
   margin-top: -1px;
-}
+} */
 
-#title {
+/* #title {
   padding-top: 32px;
-}
+} */
 
-.uploadFile {
-  border: 4px dashed rgba(4, 4, 5, 0.1);
-  border-radius: 16px;
-  text-align: center;
-  padding: 32px 60px;
-}
-
-#walletButton {
+.wallet-button {
   text-align: right;
-  float: right;
-  margin-bottom: 50px;
+  /* float: right; */
+  /* margin-bottom: 50px; */
   line-height: 16px;
 }
 /*
@@ -83,7 +77,8 @@ button:hover {
   border :none;
 } */
 
-#mintButton {
+#mintButton,
+#checkAuthz {
   margin-top: 40px;
   background-color: #254cdd;
   color: white;
