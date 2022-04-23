@@ -1,46 +1,55 @@
 import { useState } from 'react';
-import { isAccessCodeMatch, isOwner } from './utils/utils.js';
+import { getHash, isAccessCodeMatch, isOwner } from './utils/utils.js';
+import Access from './Access';
+import ContentList from './ContentList';
+import GateCheck from './GateCheck';
 
 const Restricted = ({ walletAddress }) => {
   const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isContent, setIsContent] = useState(getHash().includes('restricted-'));
   const [isValidOwner, setIsValidOwner] = useState(false);
   const [tokenId, setTokenId] = useState('');
   const [status, setStatus] = useState('');
 
   const handleAuth = async () => {
-    const isValidOwnerCheck = await isOwner(walletAddress, tokenId);
-    console.log(`isValidOwnerCheck: ${isValidOwnerCheck}`);
-    setIsValidOwner(isValidOwnerCheck);
+    setIsValidOwner(false);
+    setIsAuthorized(false);
 
-    const doesCodeMatch = await isAccessCodeMatch('def456', tokenId);
-    setIsAuthorized(doesCodeMatch);
+    try {
+      const isValidOwnerCheck = await isOwner(walletAddress, tokenId);
+      console.log(`isValidOwnerCheck: ${isValidOwnerCheck}`);
+      setIsValidOwner(isValidOwnerCheck);
+
+      const hash = getHash();
+
+      const doesCodeMatch = await isAccessCodeMatch(hash.substr(11), tokenId);
+      setIsAuthorized(doesCodeMatch);
+    } catch (err) {
+      setStatus('An error occurred during auth process. Please check that you have entered a valid token ID.');
+    }
   };
+
+  const BackArrow = () => (
+    <a href="#restricted" onClick={() => setIsContent(false)}>
+      ← Back to content list
+    </a>
+  );
 
   return (
     <div className="restricted">
+      {isContent && <BackArrow />}
       <h1 id="title">Restricted Content</h1>
       {/* if #restricted -> <ContentList /> */}
+      {!isContent && <ContentList setIsContent={setIsContent} />}
       {/* if #restricted-something -> <GateCheck /> */}
-      {/* if isValidOwner && isAuthorized -> <AccessGranted /> */}
-      {(!isValidOwner || !isAuthorized) && (
-        <div className="authz-form">
-          <form>
-            <p>Enter Token ID to Continue</p>
-            <input type="text" placeholder="e.g. your-token-id" onChange={event => setTokenId(event.target.value)} />
-          </form>
-          {status && (
-            <p id="status" style={{ color: 'red' }}>
-              {status}
-            </p>
-          )}
-          <button id="checkAuthz" onClick={handleAuth}>
-            Check Authorization
-          </button>
-        </div>
+      {isContent && (!isValidOwner || !isAuthorized) && (
+        <GateCheck handleAuth={handleAuth} setStatus={setStatus} setTokenId={setTokenId} status={status} />
       )}
       {/* TODO: Add messages for each combo of states */}
-      {isValidOwner && <h2>Valid Owner</h2>}
-      {isValidOwner && isAuthorized && <h2>Authorized</h2>}
+      {/* if isValidOwner && isAuthorized -> <AccessGranted /> */}
+      {isContent && (isValidOwner || isAuthorized) && (
+        <Access isAuthorized={isAuthorized} isValidOwner={isValidOwner} />
+      )}
     </div>
   );
 };

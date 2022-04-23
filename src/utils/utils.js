@@ -163,12 +163,12 @@ export const isAccessCodeMatch = async (accessCode = '', tokenId) => {
 };
 
 // TODO: Add method to return window.location.hash with hash symbol removed
-// export const getHash = () => {
-//   let hash = '';
-//
-//   if (window && window.location && window.location.hash && window.location.hash.substring) {
-//     hash = window.location.hash.substring(1);
-//   }
-//
-//   return hash;
-// };
+export const getHash = () => {
+  let hash = '';
+
+  if (window && window.location && window.location.hash && window.location.hash.substring) {
+    hash = window.location.hash.substring(1);
+  }
+
+  return hash;
+};
