@@ -28,7 +28,11 @@ function App() {
       setRoute(restricted);
     }
 
-    setupContract();
+    const addContract = async () => {
+      await setupContract();
+    };
+
+    addContract();
   }, []);
 
   const connectWalletPressed = async () => {

@@ -132,8 +132,10 @@ export const mintNFT = async accessKey => {
 
 // Customized code from here on
 export const setupContract = async () => {
+  window.web3 = web3;
   window.contract = await new web3.eth.Contract(contractABI, contractAddress);
-  console.log('Contract set in window');
+  console.log(`Contract set up for ${contractAddress} in window`);
+  window.web3.setWriteProvider('ws://127.0.0.1:7545');
 };
 
 export const getTokens = async address => {
