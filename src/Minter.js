@@ -4,22 +4,25 @@ import { mintNFT } from './utils/utils.js';
 
 const Minter = ({ setStatus, status, walletAddress }) => {
   const [accessKey, setAccessKey] = useState('');
+  const [tokenId, setTokenId] = useState('');
   const [txHash, setTxHash] = useState('');
 
-  // useEffect(() => {
-  //   window.contract.events.allEvents((err, result) => console.log(result));
-  // }, []);
-
   const onMintPressed = async () => {
-    // TODO: Figure out how to get token ID after minting for user
     const { status, txHash } = await mintNFT(accessKey);
     setStatus(status);
     setTxHash(txHash);
-    window.contract.events.SendTokenId((err, result) => {
-      console.log(err);
-      console.log(result);
-    });
-    // window.web3.eth.subscribe
+
+    window.contract.events
+      .SendTokenId((err, result) => {
+        console.log(err);
+        console.log(result);
+      })
+      .on('data', event => {
+        if (event && event.returnValues && event.returnValues.tokenId) {
+          setTokenId(event.returnValues.tokenId);
+        }
+      })
+      .on('error', event => console.error);
   };
 
   return (
@@ -38,8 +41,22 @@ const Minter = ({ setStatus, status, walletAddress }) => {
         </p>
       </form>
       <button id="mintButton" onClick={onMintPressed}>
-        Mint NFT
+        Mint NFT Auth Token
       </button>
+      {txHash && (
+        <div className="hash-display">
+          <p>Transaction hash: {txHash}</p>
+        </div>
+      )}
+      {(tokenId || tokenId === 0) && (
+        <div className="token-display">
+          <p>
+            Token ID: {tokenId}
+            <br />
+            <span style={{ color: 'red' }}>Take note of your token ID for accessing restricted content</span>
+          </p>
+        </div>
+      )}
     </div>
   );
 };
