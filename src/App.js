@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { connectWallet, getCurrentWalletConnected, setupContract } from './utils/utils.js';
+import { connectWallet, getCurrentWalletConnected, getHash, setupContract } from './utils/utils.js';
 // import logo from './logo.svg';
 import './App.css';
 import Minter from './Minter';
@@ -24,7 +24,9 @@ function App() {
 
     getWallet();
 
-    if (window && window.location && window.location.hash && window.location.hash === `#${restricted}`) {
+    const hash = getHash();
+
+    if (hash === restricted || hash.includes(`${restricted}-`)) {
       setRoute(restricted);
     }
 

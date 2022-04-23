@@ -17,3 +17,8 @@
   color: #61dafb;
   margin: 0 15px;
 }
+
+.app-link:hover {
+  text-decoration: none;
+  color: #ffffff;
+}
