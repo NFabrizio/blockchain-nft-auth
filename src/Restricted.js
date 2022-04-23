@@ -19,6 +19,9 @@ const Restricted = ({ walletAddress }) => {
   return (
     <div className="restricted">
       <h1 id="title">Restricted Content</h1>
+      {/* if #restricted -> <ContentList /> */}
+      {/* if #restricted-something -> <GateCheck /> */}
+      {/* if isValidOwner && isAuthorized -> <AccessGranted /> */}
       {(!isValidOwner || !isAuthorized) && (
         <div className="authz-form">
           <form>

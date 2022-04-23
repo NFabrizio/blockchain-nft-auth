@@ -1,10 +1,9 @@
 // This code started from https://github.com/alchemyplatform/nft-minter-tutorial/blob/main/nft-minter/src/util/interact.js
 const contractABI = require('../abis/authzkey-abi.json');
-const { createAlchemyWeb3 } = require('@alch/alchemy-web3');
+const Web3 = require('web3');
 
-const alchemyUrl = process.env.REACT_APP_ALCHEMY_KEY;
 const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
-const web3 = createAlchemyWeb3(alchemyUrl);
+const web3 = new Web3(Web3.givenProvider || 'ws://localhost:7545');
 
 export const connectWallet = async () => {
   if (window.ethereum) {
@@ -87,13 +86,6 @@ export const mintNFT = async accessKey => {
     };
   }
 
-  // //make metadata
-  // const metadata = new Object();
-  // metadata.name = name;
-  // metadata.description = description;
-
-  // window.contract = await new web3.eth.Contract(contractABI, contractAddress);
-
   //set up your Ethereum transaction
   const transactionParameters = {
     to: contractAddress, // Required except during contract publications.
@@ -108,18 +100,9 @@ export const mintNFT = async accessKey => {
       params: [transactionParameters]
     });
 
-    // return {
-    //   success: true,
-    //   status: 'Check your transaction using transaction hash: ' + txHash
-    // };
-
-    // const transactionDetails = await web3.eth.getTransactionReceipt(txHash);
-    //
-    // console.log(transactionDetails);
-
     return {
       success: true,
-      status: 'Check your transaction using transaction hash: ' + txHash,
+      status: `NFT auth token successfully minted`,
       txHash
     };
   } catch (error) {
@@ -135,36 +118,6 @@ export const setupContract = async () => {
   window.web3 = web3;
   window.contract = await new web3.eth.Contract(contractABI, contractAddress);
   console.log(`Contract set up for ${contractAddress} in window`);
-  window.web3.setWriteProvider('ws://127.0.0.1:7545');
-};
-
-export const getTokens = async address => {
-  console.log('web3');
-  console.log(web3);
-  // console.log(web3.alchemy);
-  console.log(`address: ${address}`);
-  // return await web3.alchemy.getNfts({ owner: address });
-  // return await web3.eth.getTransactionReceipt(address);
-  // return await window.contract.methods.balanceOf(address).send({ from: address });
-
-  //set up your Ethereum transaction
-  const transactionParameters = {
-    to: contractAddress, // Required except during contract publications.
-    from: window.ethereum.selectedAddress, // must match user's active address.
-    data: window.contract.methods.ownerOf('9').encodeABI() //make call to NFT smart contract
-  };
-
-  // const req = await window.ethereum.request({
-  // return await window.ethereum.request({
-  //   method: 'eth_getBalance',
-  //   params: [window.ethereum.selectedAddress, 'latest']
-  // });
-  const res = await window.ethereum.request({
-    method: 'eth_call',
-    params: [transactionParameters]
-  });
-
-  return web3.eth.abi.decodeParameter('address', res);
 };
 
 const checkAuthn = async tokenId => {
@@ -210,3 +163,12 @@ export const isAccessCodeMatch = async (accessCode = '', tokenId) => {
 };
 
 // TODO: Add method to return window.location.hash with hash symbol removed
+// export const getHash = () => {
+//   let hash = '';
+//
+//   if (window && window.location && window.location.hash && window.location.hash.substring) {
+//     hash = window.location.hash.substring(1);
+//   }
+//
+//   return hash;
+// };
