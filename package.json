@@ -4,16 +4,19 @@
   "private": true,
   "dependencies": {
     "@alch/alchemy-web3": "^1.3.0",
+    "@openzeppelin/contracts": "^4.5.0",
+    "ganache": "^7.0.5",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-scripts": "4.0.3",
-    "web-vitals": "^2.1.4"
+    "react-scripts": "4.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "contract:deploy": "truffle compile && truffle migrate",
+    "ganache": "ganache --server.host 127.0.0.1 --server.port 7545 --server.ws true --wallet.seed 19290209"
   },
   "eslintConfig": {
     "extends": [
