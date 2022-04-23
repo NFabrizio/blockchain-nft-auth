@@ -20,6 +20,9 @@ Project is written in Solidity, NodeJS and React.
 ## Usage
 
 - Deploy contract to Ganache network
+  - truffle compile
+  - truffle migrate
+  - Copy contract address for AuthzKey migration
 - Add values to .env
 - Import Ganache wallet to Metamask
 - Mint NFTs
