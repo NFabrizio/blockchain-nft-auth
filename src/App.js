@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { connectWallet, getCurrentWalletConnected, getHash, setupContract } from './utils/utils.js';
-// import logo from './logo.svg';
 import './App.css';
 import Minter from './Minter';
 import Restricted from './Restricted';
@@ -12,8 +11,6 @@ function App() {
   const [route, setRoute] = useState(minter);
   const [walletAddress, setWallet] = useState('');
   const [status, setStatus] = useState('');
-  // const [accessKey, setAccessKey] = useState('');
-  // const [txHash, setTxHash] = useState('');
 
   useEffect(() => {
     const getWallet = async () => {
@@ -90,7 +87,6 @@ function App() {
         )}
       </header>
       {route === minter && <Minter status={status} setStatus={setStatus} walletAddress={walletAddress} />}
-      {/* TODO: Add page with access code links to demonstrate different resources */}
       {route === restricted && <Restricted walletAddress={walletAddress} />}
     </div>
   );

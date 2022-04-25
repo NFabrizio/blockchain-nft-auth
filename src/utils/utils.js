@@ -162,7 +162,6 @@ export const isAccessCodeMatch = async (accessCode = '', tokenId) => {
   return authzAccessCode.trim() === accessCode.trim();
 };
 
-// TODO: Add method to return window.location.hash with hash symbol removed
 export const getHash = () => {
   let hash = '';
 
