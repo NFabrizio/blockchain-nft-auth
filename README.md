@@ -30,13 +30,13 @@ This project is written in Solidity and React. It uses Truffle, Ganache and Web3
    1. In a terminal window on your local machine, navigate to the root directory for this project and run the following command:  
       `npm run ganache`  
       _For simplicity and use in later steps, leave this process running in this tab in your terminal_
-3. Add the local Ganache blockchain to MetaMask.
+3. Add the local Ganache blockchain to MetaMask.  
    _Detailed instructions can be found at https://metamask.zendesk.com/hc/en-us/articles/360043227612-How-to-add-a-custom-network-RPC_
    1. In the MetaMask Settings -> Networks -> Add a network tab, use the following information:
       - Network Name: Something identifiable (e.g., Ganache Local)
       - New RPC URL: The value from your Ganache network logged as "RPC listening on" (e.g., http://127.0.0.1:7545)
       - Chain ID: The value from your Ganache network logged as "Chain Id" (e.g., 1337)
-4. Import local blockchain wallet to MetaMask.
+4. Import local blockchain wallet to MetaMask.  
    _Detailed instructions can be found at https://metamask.zendesk.com/hc/en-us/articles/360015489331-How-to-import-an-Account_
    1. In the MetaMask browser extension Import tab, use the following information:
       - Select Type: Select "Private Key"
@@ -62,12 +62,12 @@ This project is written in Solidity and React. It uses Truffle, Ganache and Web3
    2. Connect your Ganache wallet to the demo app by clicking the "Connect" button in the upper right corner of the screen.  
       _Clicking the connect button should cause MetaMask to open asking for confirmation and which wallet you would like to connect_
    3. Enter any string in the "Access Key:" field.
-   4. Click the "Mint NFT Auth Token" button.
+   4. Click the "Mint NFT Auth Token" button.  
       _After clicking the button, you should see a transaction hash rendered to the screen immediately and a message with the token ID after 30-60 seconds_
 10. Access restricted content.
-11. Click the "Restricted Content" navigation link near the upper left corner of the screen.
+11. Click the "Restricted Content" navigation link near the upper left corner of the screen.  
     _This should navigate you to a view with a list of several links to restricted digital content_
-12. Click on any of the restricted content links.
+12. Click on any of the restricted content links.  
     _This should navigate you to a restricted content page and render a challenge form asking for a token ID_
 13. Enter a token ID in the field and click the "Check Authorization" button.
     - If you are the owner of the token with that ID, you should see a message stating that you are the valid owner.
@@ -82,7 +82,7 @@ This project is written in Solidity and React. It uses Truffle, Ganache and Web3
    1. Ensure a Ganache wallet address is connected to the app using MetaMask.
    2. Mint an NFT Auth token using an access code for one of the restricted content views (e.g., abc-123).
    3. Record the token ID returned from the minter.
-   4. Navigate to the Restricted Content view and click the appropriate link based on the access code used in step 2 above.
+   4. Navigate to the Restricted Content view and click the appropriate link based on the access code used in step 2 above.  
       _The token ID form should be displayed._
    5. Enter the token ID from step 3 above.
    6. Click the "Check Authorization" button.
@@ -91,9 +91,9 @@ This project is written in Solidity and React. It uses Truffle, Ganache and Web3
    1. Ensure a Ganache wallet address is connected to the app using MetaMask.
    2. Mint an NFT Auth token using an access code for one of the restricted content views (e.g., abc-123).
    3. Record the token ID returned from the minter.
-   4. Change to a different Ganache wallet address using MetaMask.
+   4. Change to a different Ganache wallet address using MetaMask.  
       _This will require importing a separate Ganache wallet address to MetaMask. For instructions, see step 4 under Usage above._
-   5. Navigate to the Restricted Content view and click the appropriate link based on the access code used in step 2 above.
+   5. Navigate to the Restricted Content view and click the appropriate link based on the access code used in step 2 above.  
       _The token ID form should be displayed._
    6. Enter the token ID from step 3 above.
    7. Click the "Check Authorization" button.
@@ -102,7 +102,7 @@ This project is written in Solidity and React. It uses Truffle, Ganache and Web3
    1. Ensure a Ganache wallet address is connected to the app using MetaMask.
    2. Mint an NFT Auth token using an access code for one of the restricted content views (e.g., abc-123).
    3. Record the token ID returned from the minter.
-   4. Navigate to the Restricted Content view and click the appropriate link based on the access code used in step 2 above.
+   4. Navigate to the Restricted Content view and click the appropriate link based on the access code used in step 2 above.  
       _The token ID form should be displayed._
    5. Enter the token ID from step 3 above.
    6. Click the "Check Authorization" button.
@@ -111,14 +111,14 @@ This project is written in Solidity and React. It uses Truffle, Ganache and Web3
    1. Ensure a Ganache wallet address is connected to the app using MetaMask.
    2. Mint an NFT Auth token using an access code for one of the restricted content views (e.g., abc-123).
    3. Record the token ID returned from the minter.
-   4. Change to a different Ganache wallet address using MetaMask.
+   4. Change to a different Ganache wallet address using MetaMask.  
       _This will require importing a separate Ganache wallet address to MetaMask. For instructions, see step 4 under Usage above._
-   5. Navigate to the Restricted Content view and click the appropriate link based on the access code used in step 2 above.
+   5. Navigate to the Restricted Content view and click the appropriate link based on the access code used in step 2 above.  
       _The token ID form should be displayed._
    6. Enter the token ID from step 3 above.
    - Expected state: Empty state with no messages, only token ID form is displayed
 5. Use a token ID that does not exist in the system to try to gain access to a resource.
-   1. Navigate to the Restricted Content view and click any link.
+   1. Navigate to the Restricted Content view and click any link.  
       _The token ID form should be displayed._
    2. Enter a token ID with a number higher than any tokens created in the test cases above.
    3. Click the "Check Authorization" button.
