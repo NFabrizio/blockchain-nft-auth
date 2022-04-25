@@ -8,6 +8,7 @@ const web3 = new Web3(Web3.givenProvider || 'ws://localhost:7545');
 export const connectWallet = async () => {
   if (window.ethereum) {
     try {
+      // Send request to connect wallets and use the first one in the array to display as the connected wallet in the UI
       const addressArray = await window.ethereum.request({
         method: 'eth_requestAccounts'
       });
@@ -41,6 +42,7 @@ export const connectWallet = async () => {
 export const getCurrentWalletConnected = async () => {
   if (window.ethereum) {
     try {
+      // Send the request to get any connected wallets and use the first one in the array
       const addressArray = await window.ethereum.request({
         method: 'eth_accounts'
       });
@@ -79,6 +81,7 @@ export const getCurrentWalletConnected = async () => {
 };
 
 export const mintNFT = async accessKey => {
+  // If no access key provided, don't mint a token
   if (accessKey.trim() === '') {
     return {
       success: false,
@@ -86,14 +89,14 @@ export const mintNFT = async accessKey => {
     };
   }
 
-  //set up your Ethereum transaction
+  // Set up transaction parameters
   const transactionParameters = {
     to: contractAddress, // Required except during contract publications.
     from: window.ethereum.selectedAddress, // must match user's active address.
     data: window.contract.methods.mint(window.ethereum.selectedAddress, accessKey).encodeABI() //make call to NFT smart contract
   };
 
-  //sign the transaction via MetaMask
+  // Send the transaction using MetaMask
   try {
     const txHash = await window.ethereum.request({
       method: 'eth_sendTransaction',
@@ -113,18 +116,21 @@ export const mintNFT = async accessKey => {
   }
 };
 
-// Customized code from here on
+// Customized code from here on down
+
 export const setupContract = async () => {
   window.web3 = web3;
+  // Add configured contract to window object for easy reference later
   window.contract = await new web3.eth.Contract(contractABI, contractAddress);
   console.log(`Contract set up for ${contractAddress} in window`);
 };
 
 const checkAuthn = async tokenId => {
   const transactionParameters = {
-    to: contractAddress, // Required except during contract publications.
-    from: window.ethereum.selectedAddress, // must match user's active address.
-    data: window.contract.methods.ownerOf(tokenId).encodeABI() //make call to NFT smart contract
+    to: contractAddress,
+    from: window.ethereum.selectedAddress,
+    // Request owner of token for verification
+    data: window.contract.methods.ownerOf(tokenId).encodeABI()
   };
 
   const res = await window.ethereum.request({
@@ -132,14 +138,16 @@ const checkAuthn = async tokenId => {
     params: [transactionParameters]
   });
 
+  // Response is returned as hashed value, so decode it before sending it to the UI
   return web3.eth.abi.decodeParameter('address', res);
 };
 
 const checkAuthz = async tokenId => {
   const transactionParameters = {
-    to: contractAddress, // Required except during contract publications.
-    from: window.ethereum.selectedAddress, // must match user's active address.
-    data: window.contract.methods.tokenURI(tokenId).encodeABI() //make call to NFT smart contract
+    to: contractAddress,
+    from: window.ethereum.selectedAddress,
+    // Request token metadata
+    data: window.contract.methods.tokenURI(tokenId).encodeABI()
   };
 
   const res = await window.ethereum.request({
@@ -147,21 +155,25 @@ const checkAuthz = async tokenId => {
     params: [transactionParameters]
   });
 
+  // Response is returned as hashed value, so decode it before sending it to the UI
   return web3.eth.abi.decodeParameter('string', res);
 };
 
+// Check contract data and return boolean to UI
 export const isOwner = async (address = '', tokenId) => {
   const authzAddress = (await checkAuthn(tokenId)) || '';
 
   return authzAddress.toLowerCase().trim() === address.toLowerCase().trim();
 };
 
+// Check contract data and return boolean to UI
 export const isAccessCodeMatch = async (accessCode = '', tokenId) => {
   const authzAccessCode = (await checkAuthz(tokenId)) || '';
 
   return authzAccessCode.trim() === accessCode.trim();
 };
 
+// Grab window location hash and remove # symbol
 export const getHash = () => {
   let hash = '';
 

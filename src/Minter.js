@@ -12,6 +12,7 @@ const Minter = ({ setStatus, status, walletAddress }) => {
     setStatus(status);
     setTxHash(txHash);
 
+    // Listen for contract event to send the token ID of the created token
     window.contract.events
       .SendTokenId((err, result) => {
         console.log(err);

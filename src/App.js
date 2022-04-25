@@ -13,6 +13,7 @@ function App() {
   const [status, setStatus] = useState('');
 
   useEffect(() => {
+    // Get currently connected wallet address and any status message
     const getWallet = async () => {
       const { address, status } = await getCurrentWalletConnected();
       setWallet(address);
@@ -23,10 +24,12 @@ function App() {
 
     const hash = getHash();
 
+    // Set the rendered view based on the URL hash
     if (hash === restricted || hash.includes(`${restricted}-`)) {
       setRoute(restricted);
     }
 
+    // Set up the contract on load so that it is available
     const addContract = async () => {
       await setupContract();
     };
@@ -34,6 +37,7 @@ function App() {
     addContract();
   }, []);
 
+  // Communicate with MetaMask when connect button is pressed to allow wallet connection
   const connectWalletPressed = async () => {
     const walletResponse = await connectWallet();
     setStatus(walletResponse.status);
@@ -42,6 +46,7 @@ function App() {
     addWalletListener();
   };
 
+  // Listen for events from MetaMask to handle changing of rendered elements
   const addWalletListener = () => {
     if (window.ethereum) {
       // TODO: Add listener to wipe walletAddress on disconnect event

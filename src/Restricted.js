@@ -16,12 +16,14 @@ const Restricted = ({ walletAddress }) => {
     setIsAuthorized(false);
 
     try {
+      // Check if current wallet address is the owner of the token
       const isValidOwnerCheck = await isOwner(walletAddress, tokenId);
       console.log(`isValidOwnerCheck: ${isValidOwnerCheck}`);
       setIsValidOwner(isValidOwnerCheck);
 
       const hash = getHash();
 
+      // Check if the access code of the token is the correct access code for the current resource
       const doesCodeMatch = await isAccessCodeMatch(hash.substr(11), tokenId);
       setIsAuthorized(doesCodeMatch);
     } catch (err) {
